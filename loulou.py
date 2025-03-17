@@ -31,7 +31,7 @@ GAME_AREA_WIDTH  = SCREEN_WIDTH - SIDEBAR_WIDTH
 # We allow X "units" of equation frames. If total > X => game over
 MAX_EQUATION_UNITS = 20
 MAX_VISIBLE_EQUATIONS_SIDEBAR = 6
-INVINCIBLE_MODE = True
+INVINCIBLE_MODE = False
 
 # Timers and speeds
 INITIAL_SCOOP_INTERVAL = 0.5
