@@ -31,10 +31,10 @@ GAME_AREA_WIDTH  = SCREEN_WIDTH - SIDEBAR_WIDTH
 # We allow X "units" of equation frames. If total > X => game over
 MAX_EQUATION_UNITS = 20
 MAX_VISIBLE_EQUATIONS_SIDEBAR = 6
-INVINCIBLE_MODE = False
+INVINCIBLE_MODE = True
 
 # Timers and speeds
-INITIAL_SCOOP_INTERVAL = 20.0
+INITIAL_SCOOP_INTERVAL = 0.5
 RATE_INCREASE_INTERVAL = 15.0
 RATE_INCREASE_PERCENT  = 10   # +10% speed => interval *= 0.9
 SPRINT_TRIGGER_PROB    = 0.5 # chance to start sprint on score%10=5
@@ -573,7 +573,7 @@ class SidebarManager:
 ##############################################################################
 
 class Scoop:
-    def __init__(self, index, target_x, target_y, radius, color, is_giant=False):
+    def __init__(self, index, target_x, target_y, radius, color, is_giant=False, stack_top_y=0):
         self.radius = radius
         self.color  = color
         self.is_giant = is_giant
@@ -583,7 +583,7 @@ class Scoop:
             self.x = -BASICAL_LENGTH_UNIT*10
         else:
             self.x = SIDEBAR_WIDTH + GAME_AREA_WIDTH + BASICAL_LENGTH_UNIT*10
-        self.y = random.randint(BASICAL_LENGTH_UNIT*5, SCREEN_HEIGHT - BASICAL_LENGTH_UNIT*10)
+        self.y = stack_top_y + random.randint(-BASICAL_LENGTH_UNIT*10, BASICAL_LENGTH_UNIT*10)
 
         self.tx = target_x
         self.ty = target_y
@@ -730,7 +730,7 @@ def run_game():
         s = Scoop(len(scoops), x, y, radius, (random.randint(50,255),
                                  random.randint(50,255),
                                  random.randint(50,255)),
-                  is_giant)
+                  is_giant, stack_top_y)
         scoops.append(s)
         stack_top_y -= 2*radius
 
